@@ -83,12 +83,43 @@ function ShaderMesh({ size }: ShaderMeshProps) {
     }
   })
   
-  const handlePointerMove = (event: React.PointerEvent<THREE.Mesh>) => {
-    const rect = (event.target as HTMLCanvasElement).getBoundingClientRect()
-    mouseRef.current.set(
-      (event.clientX - rect.left) / rect.width,
-      1 - (event.clientY - rect.top) / rect.height
-    )
+  const handlePointerMove = (event: THREE.Event & { clientX: number; clientY: number; nativeEvent?: PointerEvent }) => {
+    // In React Three Fiber, we need to get the canvas element from the event
+    // The event object has a nativeEvent that contains the actual DOM event
+    try {
+      // Get the canvas element from the React Three Fiber event
+      const canvas = event.nativeEvent?.target || event.target
+      
+      // Check if we have a valid DOM element with getBoundingClientRect
+      if (canvas && typeof canvas === 'object' && canvas !== null && 'getBoundingClientRect' in canvas) {
+        const htmlElement = canvas as HTMLElement
+        if (typeof htmlElement.getBoundingClientRect === 'function') {
+          const rect = htmlElement.getBoundingClientRect()
+          mouseRef.current.set(
+            (event.clientX - rect.left) / rect.width,
+            1 - (event.clientY - rect.top) / rect.height
+          )
+        } else {
+          // Fallback: use viewport coordinates if we can't get the canvas rect
+          mouseRef.current.set(
+            event.clientX / dimensions.width,
+            1 - event.clientY / dimensions.height
+          )
+        }
+      } else {
+        // Fallback: use viewport coordinates if we can't get the canvas rect
+        mouseRef.current.set(
+          event.clientX / dimensions.width,
+          1 - event.clientY / dimensions.height
+        )
+      }
+    } catch (error) {
+      // Silent fallback - just use normalized viewport coordinates
+      mouseRef.current.set(
+        event.clientX / dimensions.width,
+        1 - event.clientY / dimensions.height
+      )
+    }
   }
   
   // Make plane large enough to cover entire screen regardless of aspect ratio
