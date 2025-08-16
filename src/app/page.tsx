@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import ShaderCanvas from '@/components/ShaderCanvas'
+import Clock from '@/components/Clock'
 import ThemeInputHandler from '@/components/ThemeInputHandler'
 
 export default function Home() {
@@ -31,6 +32,21 @@ export default function Home() {
           size={Math.max(dimensions.width, dimensions.height)} 
           className="w-screen h-screen"
         />
+      </div>
+      
+      {/* Clock Overlay - Centered Middle */}
+      <div 
+        className="absolute inset-0 flex items-center justify-center" 
+        style={{ 
+          zIndex: 10,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100vh',
+          width: '100vw'
+        }}
+      >
+        <Clock />
       </div>
     </div>
   )
