@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Shadr - Minimalist Reminder Tool",
+  title: "Shadr",
   description: "A minimalist dark-mode reminder tool with interactive shader canvas",
 };
 

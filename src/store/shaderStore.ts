@@ -21,6 +21,9 @@ export const useShaderStore = create<ShaderStore>((set) => ({
       fragmentShader: `
         uniform float iTime;
         uniform vec2 iResolution;
+        uniform vec3 uPrimaryColor;
+        uniform vec3 uSecondaryColor;
+        uniform vec3 uAccentColor;
         
         void main() {
           vec2 uv = (2.0 * gl_FragCoord.xy - iResolution.xy) / min(iResolution.x, iResolution.y);
@@ -28,7 +31,9 @@ export const useShaderStore = create<ShaderStore>((set) => ({
             uv.x += 0.6 / i * cos(i * 2.5 * uv.y + iTime);
             uv.y += 0.6 / i * cos(i * 1.5 * uv.x + iTime);
           }
-          gl_FragColor = vec4(vec3(0.1)/abs(sin(iTime - uv.y - uv.x)), 1.0);
+          float intensity = 0.1/abs(sin(iTime - uv.y - uv.x));
+          vec3 color = mix(uSecondaryColor, uPrimaryColor, intensity);
+          gl_FragColor = vec4(color, 1.0);
         }
       `
     },
@@ -38,6 +43,9 @@ export const useShaderStore = create<ShaderStore>((set) => ({
       fragmentShader: `
         uniform float iTime;
         uniform vec2 iResolution;
+        uniform vec3 uPrimaryColor;
+        uniform vec3 uSecondaryColor;
+        uniform vec3 uAccentColor;
         
         #define t iTime
         mat2 m(float a){float c=cos(a), s=sin(a);return mat2(c,-s,s,c);}
@@ -49,13 +57,13 @@ export const useShaderStore = create<ShaderStore>((set) => ({
 
         void main() {	
           vec2 p = gl_FragCoord.xy/iResolution.y - vec2(.9,.5);
-          vec3 cl = vec3(0.);
+          vec3 cl = uSecondaryColor;
           float d = 2.5;
           for(int i=0; i<=5; i++)	{
             vec3 p = vec3(0,0,5.) + normalize(vec3(p, -1.))*d;
             float rz = map(p);
             float f =  clamp((rz - map(p+.1))*0.5, -.1, 1. );
-            vec3 l = vec3(0.1,0.3,.4) + vec3(5., 2.5, 3.)*f;
+            vec3 l = mix(uAccentColor, uPrimaryColor, f) + uPrimaryColor * f * 2.0;
             cl = cl*l + smoothstep(2.5, .0, rz)*.7*l;
             d += min(rz, 1.);
           }
@@ -65,23 +73,40 @@ export const useShaderStore = create<ShaderStore>((set) => ({
     },
     {
       id: 2,
-      name: 'Shooting Stars',
+      name: 'Swirling Vortex',
       fragmentShader: `
         uniform float iTime;
         uniform vec2 iResolution;
+        uniform vec3 uPrimaryColor;
+        uniform vec3 uSecondaryColor;
+        uniform vec3 uAccentColor;
         
         void main() {
-          vec4 O = vec4(0.0);
-          vec2 I = gl_FragCoord.xy;
-          O *= 0.;
-          vec2 b = vec2(0, .2), p;
-          mat2 R;
-          for(float i = .9; i++ < 20.;
-              O += 1e-3 / length(clamp(p = R *
-              (fract((I / iResolution.y * i * .1 + iTime * b) * R) - .5), -b, b) - p)
-              * (cos(p.y / .1 + vec4(0, 1, 2, 3)) + 1.))
-              R = mat2(cos(i + vec4(0, 33, 11, 0)));
-          gl_FragColor = O;
+          vec2 uv = gl_FragCoord.xy / iResolution.xy;
+          vec2 center = vec2(0.5, 0.5);
+          
+          // Calculate distance and angle from center
+          vec2 pos = uv - center;
+          float dist = length(pos);
+          float angle = atan(pos.y, pos.x);
+          
+          // Create swirling effect - bigger spiral
+          float spiral = angle + dist * 3.0 - iTime * 1.5;
+          float vortex = sin(spiral) * 0.5 + 0.5;
+          
+          // Add radial gradient - extends further out
+          float radial = 1.0 - smoothstep(0.0, 1.2, dist);
+          
+          // Combine effects
+          float intensity = vortex * radial;
+          
+          // Color mixing based on spiral pattern
+          vec3 color1 = mix(uSecondaryColor, uPrimaryColor, intensity);
+          vec3 color2 = mix(uPrimaryColor, uAccentColor, vortex);
+          
+          vec3 finalColor = mix(color1, color2, radial * 0.5);
+          
+          gl_FragColor = vec4(finalColor, 1.0);
         }
       `
     },
@@ -92,6 +117,9 @@ export const useShaderStore = create<ShaderStore>((set) => ({
         uniform float iTime;
         uniform vec2 iMouse;
         uniform vec2 iResolution;
+        uniform vec3 uPrimaryColor;
+        uniform vec3 uSecondaryColor;
+        uniform vec3 uAccentColor;
         
         #define PI 3.14159265359
 
@@ -152,10 +180,10 @@ export const useShaderStore = create<ShaderStore>((set) => ({
           float animatedLine = lines(uv + vec2(timeOffset, 0.0), thickness, distortion);
           line = mix(line, animatedLine, 0.3);
           
-          vec3 backgroundColor = vec3(0.0, 0.0, 0.0);
-          vec3 lineColor = vec3(1.0, 1.0, 1.0);
+          vec3 backgroundColor = uSecondaryColor;
+          vec3 lineColor = uPrimaryColor;
           vec3 finalColor = mix(backgroundColor, lineColor, line);
-          finalColor += vec3(0.1, 0.1, 0.1) * mouseInfluence * line;
+          finalColor += uAccentColor * mouseInfluence * line * 0.3;
           
           gl_FragColor = vec4(finalColor, 1.0);
         }
