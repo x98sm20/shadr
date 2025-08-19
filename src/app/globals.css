@@ -121,34 +121,66 @@
     @apply border-border outline-ring/50;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
   }
-  html, body {
+  
+  html {
+    @apply dark;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden !important;
+    overscroll-behavior: none;
+    touch-action: none;
+    -webkit-overflow-scrolling: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  
+  body {
     @apply bg-background text-foreground font-body;
     margin: 0;
     padding: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden !important;
+    overscroll-behavior: none;
+    touch-action: none;
     background-color: #000000 !important;
+    position: fixed;
+    top: 0;
+    left: 0;
   }
+  
+  /* Disable all scrollbars */
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  *::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  
+  /* Prevent any element from creating scroll */
+  * {
+    -webkit-overflow-scrolling: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    overscroll-behavior: none;
+  }
+  
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
   }
-  
-  /* Custom scrollbar for dark theme */
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 3px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.3);
-  }
+}
+
+/* Completely disable scrolling with JavaScript fallback */
+html, body {
+  scroll-behavior: auto !important;
 }
 
 /* Ensure dark mode by default */
