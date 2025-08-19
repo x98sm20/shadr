@@ -34,8 +34,71 @@ export default function Clock({ className = '' }: ClockProps) {
   const { hours, minutes } = formatTime(time)
 
   return (
-    <h1 className={`text-white font-bold text-8xl text-center select-none ${className}`}>
-      {hours}:{minutes}
-    </h1>
+    <div 
+      className="flex flex-col items-center justify-center"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '1rem',
+        position: 'relative',
+        zIndex: 1000
+      }}
+    >
+      {/* Time Display */}
+      <div
+        style={{
+          fontFamily: 'Helvetica, Arial, sans-serif',
+          fontSize: 'clamp(4rem, 15vw, 12rem)',
+          fontWeight: 900,
+          letterSpacing: '-0.02em',
+          color: '#FFFFFF',
+          textAlign: 'center',
+          textShadow: '0 0 30px rgba(255, 255, 255, 0.5)',
+          margin: 0,
+          padding: 0,
+          lineHeight: 1
+        }}
+      >
+        {hours}:{minutes}
+      </div>
+      
+      {/* Temperature Display */}
+      <div
+        style={{
+          fontFamily: 'Helvetica, Arial, sans-serif',
+          fontSize: 'clamp(2rem, 6vw, 4rem)',
+          fontWeight: 900,
+          letterSpacing: '-0.01em',
+          color: '#FFFFFF',
+          textAlign: 'center',
+          textShadow: '0 0 20px rgba(255, 255, 255, 0.5)',
+          margin: 0,
+          padding: 0,
+          lineHeight: 1
+        }}
+      >
+        25°C
+      </div>
+      
+      {/* Location Display */}
+      <div
+        style={{
+          fontFamily: 'Helvetica, Arial, sans-serif',
+          fontSize: 'clamp(1rem, 3vw, 2rem)',
+          fontWeight: 700,
+          letterSpacing: '0.02em',
+          color: '#FFFFFF',
+          textAlign: 'center',
+          textShadow: '0 0 15px rgba(255, 255, 255, 0.3)',
+          margin: 0,
+          padding: 0,
+          lineHeight: 1
+        }}
+      >
+        Dubai, UAE
+      </div>
+    </div>
   )
 }

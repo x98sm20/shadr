@@ -164,12 +164,20 @@ const ShaderMesh = memo(function ShaderMesh({ size }: ShaderMeshProps) {
     }
   }
   
-  // Make plane large enough to cover entire screen regardless of aspect ratio
-  const planeSize = 10 // Much larger to ensure full coverage
+  // Calculate proper plane size with generous margin for full coverage
+  const camera = { fov: 75, distance: 1 }
+  const fovRadians = (camera.fov * Math.PI) / 180
+  const planeHeight = 2 * Math.tan(fovRadians / 2) * camera.distance
+  const planeWidth = planeHeight * (dimensions.width / dimensions.height)
+  
+  // Use very generous margin to ensure complete coverage including bottom edge
+  const margin = 2.5
+  const finalWidth = Math.max(planeWidth * margin, 10)
+  const finalHeight = Math.max(planeHeight * margin, 10)
   
   return (
-    <mesh ref={meshRef} onPointerMove={handlePointerMove} material={shaderMaterial}>
-      <planeGeometry args={[planeSize, planeSize]} />
+    <mesh ref={meshRef} onPointerMove={handlePointerMove} material={shaderMaterial} position={[0, 0, 0]}>
+      <planeGeometry args={[finalWidth, finalHeight]} />
     </mesh>
   )
 })
@@ -181,13 +189,19 @@ interface ShaderCanvasProps {
 }
 
 // Stable object references to prevent Canvas re-renders
-const CAMERA_CONFIG = { position: [0, 0, 1] as const, fov: 75 }
+const CAMERA_CONFIG = { position: [0, 0, 1] as const, fov: 75, near: 0.1, far: 1000 }
 const CANVAS_STYLE = { 
   width: '100vw', 
   height: '100vh',
-  display: 'block'
+  display: 'block',
+  margin: 0,
+  padding: 0,
+  overflow: 'hidden',
+  position: 'absolute' as const,
+  top: 0,
+  left: 0
 } as const
-const GL_CONFIG = { antialias: false }
+const GL_CONFIG = { antialias: false, alpha: false, preserveDrawingBuffer: false }
 
 export default memo(function ShaderCanvas({ size, onClick, className = '' }: ShaderCanvasProps) {
   const { isTransitioning } = useThemeStore()
@@ -201,7 +215,8 @@ export default memo(function ShaderCanvas({ size, onClick, className = '' }: Sha
     position: 'absolute' as const,
     top: 0,
     left: 0,
-    opacity: 1.0
+    opacity: 1.0,
+    overflow: 'hidden'
   }), [])
   
   return (
