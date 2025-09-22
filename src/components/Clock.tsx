@@ -134,64 +134,76 @@ export default function Clock({ className = '' }: ClockProps) {
       {/* Time Display */}
       <div
         style={{
-          fontFamily: 'Helvetica, Arial, sans-serif',
-          fontSize: 'clamp(4rem, 15vw, 12rem)',
-          fontWeight: 900,
-          letterSpacing: '-0.02em',
+          fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+          fontSize: 'clamp(3rem, 12vw, 8rem)',
+          fontWeight: 700,
+          letterSpacing: '-0.03em',
           color: '#FFFFFF',
           textAlign: 'center',
           textShadow: '0 0 30px rgba(255, 255, 255, 0.5)',
           margin: 0,
           padding: 0,
-          lineHeight: 1
+          lineHeight: 0.9,
+          marginBottom: '1rem'
         }}
       >
         {hours}:{minutes}
       </div>
       
-      {/* Temperature Display */}
+      {/* Weather + Location Row */}
       <div
         style={{
-          fontFamily: 'Helvetica, Arial, sans-serif',
-          fontSize: 'clamp(1.5rem, 5vw, 3rem)',
-          fontWeight: 700,
-          letterSpacing: '-0.01em',
-          color: '#FFFFFF',
-          textAlign: 'center',
-          textShadow: '0 0 20px rgba(255, 255, 255, 0.5)',
-          margin: 0,
-          padding: 0,
-          lineHeight: 1,
-          opacity: weather.loading ? 0.6 : 1,
-          transition: 'opacity 0.3s ease'
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '2rem',
+          flexWrap: 'wrap'
         }}
       >
-        {weather.loading ? 'Loading...' : `${weather.temperature}°C`}
-      </div>
-      
-      {/* Location Display */}
-      <div
-        style={{
-          fontFamily: 'Helvetica, Arial, sans-serif',
-          fontSize: 'clamp(0.8rem, 2.5vw, 1.5rem)',
-          fontWeight: 600,
-          letterSpacing: '0.02em',
-          color: '#FFFFFF',
-          textAlign: 'center',
-          textShadow: '0 0 15px rgba(255, 255, 255, 0.3)',
-          margin: 0,
-          padding: 0,
-          lineHeight: 1,
-          opacity: weather.loading ? 0.6 : 1,
-          transition: 'opacity 0.3s ease'
-        }}
-      >
-        {weather.loading 
-          ? 'Getting location...' 
-          : weather.error 
-            ? 'Location unavailable'
-            : `${weather.location.city}${weather.location.country ? `, ${weather.location.country}` : ''}`
-        }
+        {/* Temperature */}
+        <div
+          style={{
+            fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+            fontSize: 'clamp(1rem, 3vw, 1.8rem)',
+            fontWeight: 500,
+            letterSpacing: '-0.02em',
+            color: '#FFFFFF',
+            textAlign: 'center',
+            textShadow: '0 0 15px rgba(255, 255, 255, 0.4)',
+            margin: 0,
+            padding: 0,
+            lineHeight: 1,
+            opacity: weather.loading ? 0.6 : 1,
+            transition: 'opacity 0.3s ease'
+          }}
+        >
+          {weather.loading ? 'Loading...' : `${weather.temperature}°C`}
+        </div>
+        
+        {/* Location */}
+        <div
+          style={{
+            fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+            fontSize: 'clamp(0.9rem, 2.5vw, 1.6rem)',
+            fontWeight: 400,
+            letterSpacing: '-0.01em',
+            color: '#FFFFFF',
+            textAlign: 'center',
+            textShadow: '0 0 15px rgba(255, 255, 255, 0.3)',
+            margin: 0,
+            padding: 0,
+            lineHeight: 1,
+            opacity: weather.loading ? 0.6 : 1,
+            transition: 'opacity 0.3s ease'
+          }}
+        >
+          {weather.loading 
+            ? 'Getting location...' 
+            : weather.error 
+              ? 'Location unavailable'
+              : `${weather.location.city}${weather.location.country ? `, ${weather.location.country}` : ''}`
+          }
+        </div>
       </div>
     </div>
   )
