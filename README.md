@@ -1,60 +1,107 @@
-# Shadr
+# ✨ Shadr
 
-A minimalist full-screen shader canvas application built with Next.js and React Three Fiber.
+> A mesmerizing full-screen shader canvas experience that transforms your browser into a living artwork.
 
-## Features
+![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)
+![WebGL](https://img.shields.io/badge/WebGL-GLSL-red?style=flat-square&logo=webgl)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
-- **Full-screen shader canvas** with beautiful animated GLSL patterns
-- **Multiple shader options** including wavy patterns, Ether, Shooting Stars, and interactive wavy lines
-- **Real-time WebGL rendering** with smooth animations
-- **Responsive design** that adapts to any screen size
-- **Mouse interaction support** for compatible shaders
+**Shadr** is a minimalist, full-screen shader canvas application that brings stunning GLSL animations to life in your browser. Built with modern web technologies, it offers a collection of carefully crafted visual experiences that respond to your interactions.
 
-## Tech Stack
+## 🎨 Features
 
-- **Next.js 15** with TypeScript
-- **React Three Fiber** for WebGL rendering
-- **Three.js** for 3D graphics
-- **Zustand** for state management
-- **Tailwind CSS** for styling
-- **shadcn/ui** components (ready for future features)
+- **🌊 Immersive Full-Screen Experience** - Edge-to-edge shader rendering that fills your entire viewport
+- **🎭 Four Unique Visual Experiences**:
+  - **Default** - Hypnotic wavy patterns that flow across the screen
+  - **Ether** - Fluid, organic formations inspired by natural phenomena
+  - **Swirling Vortex** - Dynamic spiral patterns with edge-glow effects
+  - **Wavy Lines** - Interactive distorted lines that respond to mouse movement
+- **🖱️ Interactive Elements** - Mouse tracking for dynamic visual responses
+- **📱 Responsive Design** - Optimized for both desktop and mobile experiences
+- **⚡ Real-Time Performance** - Smooth 60fps WebGL rendering
+- **🎨 Theme System** - Color palette management with smooth transitions
 
-## Getting Started
+## 🚀 Quick Start
 
-1. Clone the repository:
 ```bash
+# Clone the repository
 git clone https://github.com/x98sm20/shadr.git
 cd shadr
-```
 
-2. Install dependencies:
-```bash
+# Install dependencies
 npm install
-```
 
-3. Run the development server:
-```bash
+# Start the development server
 npm run dev
 ```
 
-4. Open [http://localhost:3001](http://localhost:3001) in your browser.
+Visit [http://localhost:3001](http://localhost:3001) and immerse yourself in the visual experience.
 
-## Shaders
+## 🛠️ Tech Stack
 
-The application includes 4 different GLSL shaders:
+- **[Next.js 15](https://nextjs.org/)** - React framework with TypeScript
+- **[React Three Fiber](https://docs.pmnd.rs/react-three-fiber)** - React renderer for Three.js
+- **[Three.js](https://threejs.org/)** - 3D graphics library for WebGL
+- **[Zustand](https://zustand-demo.pmnd.rs/)** - Lightweight state management
+- **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS framework
+- **[shadcn/ui](https://ui.shadcn.com/)** - Beautiful UI components
 
-1. **Default** - Animated wavy patterns
-2. **Ether** - Fluid, organic patterns by nimitz
-3. **Shooting Stars** - Particle-like animations by @XorDev
-4. **Wavy Lines** - Interactive distorted lines with mouse support
+## 🎮 Usage
 
-## Development
+- **Navigate Shaders**: Click anywhere on the canvas to cycle through different visual experiences
+- **Mouse Interaction**: Move your cursor around to influence shader behavior (where supported)
+- **Full-Screen**: The application automatically adapts to your screen size for optimal viewing
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint
+## 🎯 Shader Details
 
-## License
+### 1. Default Waves
+Mesmerizing sine wave patterns that create flowing, organic movements across the screen.
 
-MIT License
+### 2. Ether
+Inspired by natural fluid dynamics, this shader creates ethereal, cloud-like formations that evolve over time.
+
+### 3. Swirling Vortex
+A dynamic spiral effect with customizable glow positioning - recently enhanced with edge-glow effects for dramatic visual impact.
+
+### 4. Wavy Lines
+Interactive horizontal lines that distort and respond to mouse position, creating a unique reactive experience.
+
+## 🛠️ Development
+
+```bash
+npm run dev      # Development server with hot reload
+npm run build    # Production build
+npm run start    # Start production server
+npm run lint     # Run ESLint checks
+```
+
+## 🗺️ Roadmap
+
+Check out our [ROADMAP.md](./ROADMAP.md) for upcoming features including:
+- Audio-reactive visualizations
+- Shader parameter controls
+- Video export functionality
+- Community shader submissions
+
+## 🤝 Contributing
+
+We welcome contributions! Whether it's:
+- 🐛 Bug fixes
+- ✨ New shader implementations
+- 📚 Documentation improvements
+- 🎨 UI/UX enhancements
+
+Please feel free to open issues and submit pull requests.
+
+## 📄 License
+
+MIT License - see [LICENSE](./LICENSE) for details.
+
+---
+
+<div align="center">
+  <strong>✨ Experience the beauty of computational art ✨</strong>
+  <br>
+  <em>Built with ❤️ for the creative coding community</em>
+</div>

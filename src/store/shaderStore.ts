@@ -85,8 +85,9 @@ export const useShaderStore = create<ShaderStore>((set) => ({
           vec2 uv = gl_FragCoord.xy / iResolution.xy;
           vec2 center = vec2(0.5, 0.5);
           
-          // Calculate distance and angle from center
+          // Calculate distance and angle from center - normalize for aspect ratio
           vec2 pos = uv - center;
+          pos.x *= iResolution.x / iResolution.y; // Correct for aspect ratio
           float dist = length(pos);
           float angle = atan(pos.y, pos.x);
           
@@ -94,17 +95,19 @@ export const useShaderStore = create<ShaderStore>((set) => ({
           float spiral = angle + dist * 3.0 - iTime * 1.5;
           float vortex = sin(spiral) * 0.5 + 0.5;
           
-          // Add radial gradient - extends further out
-          float radial = 1.0 - smoothstep(0.0, 1.2, dist);
+          // Add radial gradient - strong glow at edges only
+          float radial = smoothstep(0.4, 1.0, dist);
+          float edgeGlow = pow(radial, 2.0);
           
-          // Combine effects
-          float intensity = vortex * radial;
+          // Combine effects - much stronger edge emphasis
+          float intensity = vortex * edgeGlow;
           
-          // Color mixing based on spiral pattern
-          vec3 color1 = mix(uSecondaryColor, uPrimaryColor, intensity);
+          // Color mixing based on spiral pattern - darken center
+          vec3 centerDarkness = mix(vec3(0.1), uSecondaryColor, dist);
+          vec3 color1 = mix(centerDarkness, uPrimaryColor, intensity);
           vec3 color2 = mix(uPrimaryColor, uAccentColor, vortex);
           
-          vec3 finalColor = mix(color1, color2, radial * 0.5);
+          vec3 finalColor = mix(color1, color2, edgeGlow * 0.8);
           
           gl_FragColor = vec4(finalColor, 1.0);
         }
