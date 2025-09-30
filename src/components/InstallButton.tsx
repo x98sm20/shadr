@@ -15,7 +15,7 @@ export default function InstallButton() {
   useEffect(() => {
     // Check if already installed
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches
-    const isInWebAppiOS = (window.navigator as any).standalone === true
+    const isInWebAppiOS = (window.navigator as { standalone?: boolean }).standalone === true
     const isInWebAppChrome = window.matchMedia('(display-mode: fullscreen)').matches
     
     if (isStandalone || isInWebAppiOS || isInWebAppChrome) {

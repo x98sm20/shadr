@@ -19,6 +19,8 @@ interface WeatherData {
 }
 
 export default function Clock({ className = '' }: ClockProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _ = className
   const [time, setTime] = useState(new Date())
   const [mounted, setMounted] = useState(false)
   const [weather, setWeather] = useState<WeatherData>({

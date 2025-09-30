@@ -47,8 +47,9 @@ interface ShaderMeshProps {
 }
 
 const ShaderMesh = memo(function ShaderMesh({ size }: ShaderMeshProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _ = size
   const meshRef = useRef<THREE.Mesh>(null)
-  const materialRef = useRef<THREE.ShaderMaterial>(null)
   const mouseRef = useRef(new THREE.Vector2())
   const [dimensions, setDimensions] = useState({ width: 1920, height: 1080 })
   
@@ -57,7 +58,6 @@ const ShaderMesh = memo(function ShaderMesh({ size }: ShaderMeshProps) {
   
   // Get current theme and its shader - memoize to prevent unnecessary recalculations
   const currentTheme = useMemo(() => themes[activeThemeIndex], [themes, activeThemeIndex])
-  const activeShaderIndex = currentTheme.shaderIndex
   
   // Memoize the dimension update callback
   const updateDimensions = useCallback(() => {
@@ -104,7 +104,7 @@ const ShaderMesh = memo(function ShaderMesh({ size }: ShaderMeshProps) {
         uAccentColor: { value: new THREE.Vector3(...currentTheme.colors.accent) },
       }
     })
-  }, [fragmentShader, dimensions.width, dimensions.height])
+  }, [fragmentShader, dimensions.width, dimensions.height, currentTheme.colors.primary, currentTheme.colors.secondary, currentTheme.colors.accent])
   
   useFrame((state) => {
     if (shaderMaterial && shaderMaterial.uniforms) {
@@ -155,7 +155,7 @@ const ShaderMesh = memo(function ShaderMesh({ size }: ShaderMeshProps) {
           1 - event.clientY / dimensions.height
         )
       }
-    } catch (error) {
+    } catch {
       // Silent fallback - just use normalized viewport coordinates
       mouseRef.current.set(
         event.clientX / dimensions.width,
@@ -204,7 +204,6 @@ const CANVAS_STYLE = {
 const GL_CONFIG = { antialias: false, alpha: false, preserveDrawingBuffer: false }
 
 export default memo(function ShaderCanvas({ size, onClick, className = '' }: ShaderCanvasProps) {
-  const { isTransitioning } = useThemeStore()
   
   // Memoize the container style to prevent re-renders
   const containerStyle = useMemo(() => ({

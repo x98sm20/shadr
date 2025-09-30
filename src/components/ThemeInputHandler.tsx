@@ -5,7 +5,6 @@ import { useThemeStore } from '@/store/themeStore'
 
 export default function ThemeInputHandler() {
   const { nextTheme, setTransitioning } = useThemeStore()
-  const spacePressed = useRef(false)
   const isTransitioning = useRef(false)
 
   useEffect(() => {

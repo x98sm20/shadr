@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 interface WeatherData {
   temperature: number
@@ -53,7 +53,7 @@ export default function Weather({ className = '' }: WeatherProps) {
       } else {
         throw new Error('Weather API failed')
       }
-    } catch (error) {
+    } catch {
       console.log('Weather fetch failed, using Bangalore fallback')
       // Fallback to Bangalore
       setWeather({
@@ -65,13 +65,13 @@ export default function Weather({ className = '' }: WeatherProps) {
     setLoading(false)
   }
 
-  const getUserLocation = () => {
+  const getUserLocation = useCallback(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           fetchWeatherData(position.coords.latitude, position.coords.longitude)
         },
-        (error) => {
+        () => {
           console.log('Geolocation denied or failed, using Bangalore fallback')
           // Fallback to Bangalore if geolocation fails or is denied
           fetchWeatherData(BANGALORE_COORDS.lat, BANGALORE_COORDS.lon)
@@ -87,12 +87,12 @@ export default function Weather({ className = '' }: WeatherProps) {
       // Fallback to Bangalore if geolocation is not supported
       fetchWeatherData(BANGALORE_COORDS.lat, BANGALORE_COORDS.lon)
     }
-  }
+  }, [BANGALORE_COORDS.lat, BANGALORE_COORDS.lon])
 
   useEffect(() => {
     setMounted(true)
     getUserLocation()
-  }, [])
+  }, [getUserLocation])
 
   // Prevent hydration mismatch
   if (!mounted) {
