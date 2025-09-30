@@ -13,8 +13,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Shadr",
-  description: "A minimalist dark-mode reminder tool with interactive shader canvas",
+  title: "Shadr - Mesmerizing Shader Canvas",
+  description: "A mesmerizing full-screen shader canvas experience that transforms your browser into a living artwork",
+  manifest: "/manifest.json",
+  themeColor: "#000000",
+  viewport: "width=device-width, initial-scale=1, viewport-fit=cover",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Shadr"
+  },
+  openGraph: {
+    title: "Shadr - Mesmerizing Shader Canvas",
+    description: "A mesmerizing full-screen shader canvas experience with beautiful GLSL animations",
+    type: "website",
+  }
 };
 
 export default function RootLayout({
@@ -24,6 +37,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#000000" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Shadr" />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

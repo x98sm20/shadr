@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import ShaderCanvas from '@/components/ShaderCanvas'
 import Clock from '@/components/Clock'
 import ThemeInputHandler from '@/components/ThemeInputHandler'
+import InstallButton from '@/components/InstallButton'
 
 export default function Home() {
   const [dimensions, setDimensions] = useState({ width: 1920, height: 1080 })
@@ -87,6 +88,9 @@ export default function Home() {
       >
         <Clock />
       </div>
+      
+      {/* Install Button */}
+      <InstallButton />
     </div>
   )
 }

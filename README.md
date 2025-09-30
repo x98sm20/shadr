@@ -21,6 +21,8 @@
 - **📱 Responsive Design** - Optimized for both desktop and mobile experiences
 - **⚡ Real-Time Performance** - Smooth 60fps WebGL rendering
 - **🎨 Theme System** - Color palette management with smooth transitions
+- **📱 PWA Support** - Install as a home screen app for full-screen immersive experience
+- **🌍 Smart Location** - Displays local weather with Bangalore fallback (birthplace of Shadr!)
 
 ## 🚀 Quick Start
 
@@ -52,6 +54,8 @@ Visit [http://localhost:3001](http://localhost:3001) and immerse yourself in the
 - **Navigate Shaders**: Click anywhere on the canvas to cycle through different visual experiences
 - **Mouse Interaction**: Move your cursor around to influence shader behavior (where supported)
 - **Full-Screen**: The application automatically adapts to your screen size for optimal viewing
+- **📱 Add to Home Screen**: Install as a PWA for full-screen mobile/desktop experience
+- **🌍 Location**: Weather displays your location (with **Bangalore, India** as fallback if location permission is denied)
 
 ## 🎯 Shader Details
 
@@ -75,6 +79,26 @@ npm run build    # Production build
 npm run start    # Start production server
 npm run lint     # Run ESLint checks
 ```
+
+## 📱 PWA Installation
+
+**Shadr works as a Progressive Web App!** Install it for the ultimate full-screen experience:
+
+### Mobile (iOS/Android)
+1. Open Shadr in Safari (iOS) or Chrome (Android)
+2. Tap the share button and select "Add to Home Screen"
+3. Launch from your home screen for a true full-screen app experience
+
+### Desktop (Chrome/Edge)
+1. Look for the install icon (⊕) in the address bar
+2. Click "Install Shadr" in the popup
+3. Launch from your desktop/start menu
+
+### Features
+- **Full-screen launch** with no browser UI
+- **Offline capability** (once cached)
+- **App shortcuts** to specific shaders
+- **Native app feel** on all platforms
 
 ## 🗺️ Roadmap
 
